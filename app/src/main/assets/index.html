@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <metal charset="utf-8"/>
+    <title>标题</title>
+    <script type="text/javascript">
+        function onSuccess(res){
+            console.log("成功"+res)
+            window.alert("成功"+res)
+        }
+        
+        function onFail(res){
+            console.log("失败"+res)
+            window.alert("失败"+res)
+        }
+        function onComplete(res){
+            console.log("完成"+res)
+            window.alert("完成"+res)
+        }
+
+
+        function getNetworkType(){
+            var jsonobj = {
+                success:"onSuccess",
+                fail:"onFail",
+                complete:"onComplete"
+            }
+            var json = JSON.stringify(jsonobj)
+            window.jm.getNetworkType(json)
+        }
+
+
+
+
+        function chooseImage(){
+            var jsonobj = {
+                count:1,
+                success:"onSuccess",
+                fail:"onFail",
+                complete:"onComplete"
+            }
+            var json = JSON.stringify(jsonobj)
+            window.jm.chooseImage(json)
+        }
+
+    </script>
+</head>
+
+<body>
+<div>
+    <button onclick="getNetworkType()">获取网络类型</button>
+</div>
+<div>
+    <button onclick="chooseImage()">选择图片</button>
+</div>
+</body>
+</html>
