@@ -1,6 +1,9 @@
 package example.yzy.com.webnativeapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.ConsoleMessage;
@@ -9,7 +12,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import example.yzy.com.webengine.Actions;
 import example.yzy.com.webengine.webengine.WebEngine;
+
+import static example.yzy.com.webengine.RequestCodes.CHOOSE_IMG_CODE;
+import static example.yzy.com.webengine.webengine.ExtraKey.CHOOSE_IMG_KEY;
 
 public class MainActivity extends AppCompatActivity {
     private WebView mWebview;
@@ -56,6 +63,25 @@ public class MainActivity extends AppCompatActivity {
             mWebview.goBack();
         } else {
             finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode!=RESULT_OK) {
+            return;
+        }
+        switch (requestCode){
+            case CHOOSE_IMG_CODE:
+                //选择图片
+                Uri vData = data.getData();
+                Log.e("yzy", "onActivityResult: " + vData);
+                Intent vIntent = new Intent(Actions.CHOOSE_IMG_ACTION);
+                vIntent.putExtra(CHOOSE_IMG_KEY,vData.toString());
+                LocalBroadcastManager.getInstance(this).sendBroadcast(vIntent);
+                break;
+            default:
         }
     }
 }
